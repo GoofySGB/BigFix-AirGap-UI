@@ -1,0 +1,138 @@
+BES AirGap UI User Guide
+Applies to BESAirGapUI.exe version 2.0
+Generated April 29, 2026
+
+1. Purpose
+
+BES AirGap UI is a Windows interface for running BESAirgapTool.exe. It helps users create site lists, select content options, run airgap processing, monitor tool output live, and collect generated Fixlet, download, manual-list, and zip outputs without manually building command lines.
+
+2. Required Files
+
+- BESAirGapUI.exe must remain in the same working folder as BESAirgapTool.exe.
+- Supporting runtime files such as libBEScrypto.dll, libBEScryptoFIPS.dll, msvcp110.dll, msvcr110.dll, vccorlib110.dll, and ca-bundle.crt should remain in the same folder when required by your environment.
+- The application creates and uses working files such as sitelist.txt, sitelistcache.txt, sitelistdownload.txt, sitelistfilter.txt, filter.txt, Airgap.db, Fixlet, Downloads, and LOGS.
+- User settings are stored in BESAirGapUI.settings.json in the application folder.
+
+3. Launching The Application
+
+1. Open the folder that contains BESAirGapUI.exe.
+2. Double-click BESAirGapUI.exe.
+3. Enter a Serial Number and Email Address, or select a saved pair from Saved Serial Numbers.
+4. Click Run to create or refresh the site list.
+
+4. Main Screen Fields
+
+- Serial Number: License serial number used for the current run.
+- Email Address: Email address associated with the serial number.
+- Saved Serial Numbers: Drop-down list of previously used serial and email pairs.
+- Clear All Saved Serial Numbers: Removes saved serial/email history when the application closes.
+- Delete All Databases: Deletes Airgap.db and serial-specific Airgap.db.<serial> files when the application closes.
+- Run: Runs BESAirgapTool.exe to create or refresh the site list.
+- Search: Filters the visible site rows as you type.
+- Site List: Displays available sites and lets you choose a content option for each editable row.
+- Selected Row Preview: Shows only the currently highlighted row and the option selected for that row.
+- Run Airgap Tool: Starts processing for the selected site options.
+
+5. Content Options
+
+- Q - Fixlet Content Only: Retrieves Fixlet content only.
+- G - Incremental Fixlet Only: Runs the incremental Fixlet content path.
+- R - Fixlet + SHA1: Retrieves Fixlet content and SHA1/download information. R runs also create a serial-numbered manual list.
+- F - Create Filter List: Creates a filter list for one site. Only one site can use F at a time.
+
+6. Normal Workflow
+
+1. Enter or select the serial number and email address.
+2. Click Run and wait for the site list to load.
+3. Use Search if needed to find sites quickly.
+4. For each required site, select Q, G, R, or F in the Content Option column.
+5. Review the Selected Row Preview for the highlighted row.
+6. Click Run Airgap Tool.
+7. If R is selected, choose whether to zip the Downloads folder at the end of the run.
+8. If R sites are selected, enter optional filter values when prompted or leave fields blank to skip filters.
+9. Watch the BES AirGap Status window for live command output.
+10. Review the final Fixlet, Downloads, manual list, zip, and status output locations.
+
+7. Filters
+
+When R processing is selected, the application can prompt for optional filters for each selected download site. The filter dialog includes:
+
+- -fcategory
+- -fcve
+- -fdays
+- -fproduct
+- -fsource
+- -fseverity
+
+Leave any field blank to skip that filter.
+
+To specify multiple values, separate values with commas. Example:
+
+-fseverity "Critical, Important"
+
+When values contain spaces, enclose the parameter value in double quotes. Values are case sensitive.
+
+8. R Option Manual List Behavior
+
+- R option runs include:
+  -createmanuallist manual_list_<serialnumber>.txt
+- After the run, the manual list is moved into the Downloads folder.
+- If the manual list exists in Downloads, the application displays:
+  MANUAL DOWNLOAD REQUIRED
+  See Manual List In Downloads Folder
+- Use the manual list to identify items that require manual download handling.
+
+9. Zip Output
+
+When zip creation is selected for an R run, the Downloads folder is compressed into a zip file named:
+
+Downloads_<serialnumber>_<yyyy-MM-dd>.zip
+
+Example:
+
+Downloads_152301654_2026-04-29.zip
+
+10. BES AirGap Status Window
+
+- The status window appears during tool execution and is centered on the screen.
+- The window shows live output from BESAirgapTool.exe while the process is running.
+- The Stop button is available during active runs and attempts to terminate the running process.
+- Completion and failure messages remain visible for review after the run ends.
+
+11. Tools Menu
+
+- Debug mode: Runs the tool with a visible command prompt for troubleshooting.
+- Delete Fixlet Folder: Removes the Fixlet folder during the next Run step.
+- Delete Downloads Folder: Removes the Downloads folder during the next Run step.
+- Set Proxy: Opens a proxy settings dialog. User, password, hostname, and port are required when enabled.
+- Use Https: Adds HTTPS certificate arguments for BESAirgapTool.exe using ca-bundle.crt.
+
+12. Help Menu
+
+- Version displays the current application version.
+- Support opens a Help popup with support contact information.
+- The support email address is Stephen.Bauchan@hclfederal.com and opens a new email through the default mail client when clicked.
+
+13. Saved Settings And Databases
+
+- Saved serial/email pairs are stored in BESAirGapUI.settings.json.
+- The application tracks the last serial number and email address used.
+- Airgap.db may be copied to serial-specific files such as Airgap.db.<serial> so each serial can maintain its own database state.
+- Use Delete All Databases carefully; it removes the active and serial-specific database files when the application closes.
+
+14. Troubleshooting
+
+- If the application cannot start, confirm BESAirgapTool.exe is in the same folder as BESAirGapUI.exe.
+- If a run fails, review the BES AirGap Status window for live output and error messages.
+- If an unexpected error occurs, review BESAirGapUI-crash.log in the application folder.
+- If F - Create Filter List is selected, confirm that only one site uses F.
+- If download output is missing, check the Downloads folder and the manual list popup.
+- If email delivery blocks the executable, use an approved internal distribution channel and consider code signing with a trusted certificate.
+
+15. Recommended Practices
+
+- Keep the application and required runtime files together in one approved folder.
+- Review selected site options before clicking Run Airgap Tool.
+- Use Debug mode only when troubleshooting is required.
+- Do not delete databases unless you intend to reset stored Airgap.db state.
+- Preserve LOGS output when troubleshooting failed runs.

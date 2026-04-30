@@ -1,0 +1,29 @@
+# Local state and generated output
+BESAirgapUI.settings.json
+Airgap.db
+Airgap.db.*
+AirgapCache.db
+AirgapResponse*
+Downloads/
+Fixlet/
+LOGS/
+*.log
+*.TMP
+
+# Local backup/build artifacts
+*.bak
+*.zip
+bin/
+obj/
+dist/
+.vs/
+
+# Generated site/filter files
+sitelist.txt
+sitelistcache.txt
+sitelist.cache.txt
+sitelistdownload.txt
+sitelistfilter.txt
+filter.txt
+manual_list_*.txt
+Downloads_*.zip
