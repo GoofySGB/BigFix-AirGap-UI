@@ -57,12 +57,12 @@ BES AirGap UI is a Windows interface for running BESAirgapTool.exe. It helps use
 
 When R processing is selected, the application can prompt for optional filters for each selected download site. The filter dialog includes:
 
-- -fcategory
-- -fcve
-- -fdays
-- -fproduct
-- -fsource
-- -fseverity
+- -fcategory - Fixlet category property
+- -fcve - To specify the CVE (Common Vulnerabilities and Exposures) id associated with a security patch
+- -fdays - To select Fixlets whose last modified date falls within a specified number of days from the date you run the command.
+- -fproduct - To specify the product name to which the Fixlet is applicable, such as Win2008 or Win7. This information is not shown in the Console. This option is available only for sites related to patches for Windows operating systems.
+- -fsource - Provider of file, such as BigFix, Adobe, or Microsoft.
+- -fseverity - To specify the severity that a vendor associates with a security patch.
 
 Leave any field blank to skip that filter.
 
@@ -90,7 +90,7 @@ Downloads_<serialnumber>_<yyyy-MM-dd>.zip
 
 Example:
 
-Downloads_152301654_2026-04-29.zip
+Downloads_1234567890_2026-04-29.zip
 
 10. BES AirGap Status Window
 
@@ -111,7 +111,6 @@ Downloads_152301654_2026-04-29.zip
 
 - Version displays the current application version.
 - Support opens a Help popup with support contact information.
-- The support email address is Stephen.Bauchan@hclfederal.com and opens a new email through the default mail client when clicked.
 
 13. Saved Settings And Databases
 
