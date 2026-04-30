@@ -1,15 +1,14 @@
-BES AirGap UI User Guide
-Applies to BESAirGapUI.exe version 2.0
+BigFix AirGap UI User Guide
+Applies to BESAirGapUI.exe version 2.0.0
 Generated April 29, 2026
 
 1. Purpose
 
-BES AirGap UI is a Windows interface for running BESAirgapTool.exe. It helps users create site lists, select content options, run airgap processing, monitor tool output live, and collect generated Fixlet, download, manual-list, and zip outputs without manually building command lines.
+BigFix AirGap UI is a Windows interface for running BESAirgapTool.exe. It helps users create site lists, select content options, run airgap processing, monitor tool output live, and collect generated Fixlet, download, manual-list, and zip outputs without manually building command lines.
 
 2. Required Files
 
 - BESAirGapUI.exe must remain in the same working folder as BESAirgapTool.exe.
-- Supporting runtime files such as libBEScrypto.dll, libBEScryptoFIPS.dll, msvcp110.dll, msvcr110.dll, vccorlib110.dll, and ca-bundle.crt should remain in the same folder when required by your environment.
 - The application creates and uses working files such as sitelist.txt, sitelistcache.txt, sitelistdownload.txt, sitelistfilter.txt, filter.txt, Airgap.db, Fixlet, Downloads, and LOGS.
 - User settings are stored in BESAirGapUI.settings.json in the application folder.
 
