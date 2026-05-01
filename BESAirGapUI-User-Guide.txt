@@ -34,10 +34,13 @@ BigFix AirGap UI is a Windows interface for running BESAirgapTool.exe. It helps 
 
 5. Content Options
 
+The BESAirGapUI is focused on Airgap Non-Extraction Usage. For more details on these Site Gather options, refer to https://help.hcl-software.com/bigfix/11.0/platform/Platform/Config/c_airgap_tool_NonExtr.html
+
 - Q - Fixlet Content Only: Retrieves Fixlet content only.
 - G - Incremental Fixlet Only: Runs the incremental Fixlet content path.
 - R - Fixlet + SHA1: Retrieves Fixlet content and SHA1/download information. R runs also create a serial-numbered manual list.
 - F - Create Filter List: Creates a filter list for one site. Only one site can use F at a time.
+- N - Ignore this site, do not download Fixlet information or download files.
 
 6. Normal Workflow
 
