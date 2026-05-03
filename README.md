@@ -133,7 +133,7 @@ The application creates and uses working files and folders such as:
 - `sitelistfilter.txt`
 - `filter.txt`
 - `BESAirGapUI.settings.json`
-- `AirGapZipExtractor.exe
+- `AirGapZipExtractor.exe`
 
 These generated files should generally stay out of source control because they can contain local state, serial-specific data, logs, or downloaded content.
 
