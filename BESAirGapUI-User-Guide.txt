@@ -1,15 +1,16 @@
-BigFix AirGap UI User Guide
-Applies to BESAirGapUI.exe version 2.0.0
-Generated April 29, 2026
+BES AirGap UI User Guide
+Applies to BESAirGapUI.exe version 2.1.0
+Generated May 3, 2026
 
 1. Purpose
 
-BigFix AirGap UI is a Windows interface for running BESAirgapTool.exe. It helps users create site lists, select content options, run airgap processing, monitor tool output live, and collect generated Fixlet, download, manual-list, and zip outputs without manually building command lines.
+BES AirGap UI is a Windows interface for running BESAirgapTool.exe. It helps users create site lists, select content options, run airgap processing, monitor tool output live, and collect generated Fixlet, download, manual-list, zip, and split-zip outputs without manually building command lines.
 
 2. Required Files
 
 - BESAirGapUI.exe must remain in the same working folder as BESAirgapTool.exe.
-- The application creates and uses working files such as sitelist.txt, sitelistcache.txt, sitelistdownload.txt, sitelistfilter.txt, filter.txt, Airgap.db, Fixlet, Downloads, and LOGS.
+- Supporting runtime files such as libBEScrypto.dll, libBEScryptoFIPS.dll, msvcp110.dll, msvcr110.dll, vccorlib110.dll, and ca-bundle.crt should remain in the same folder when required by your environment.
+- The application creates and uses working files and folders such as sitelist.txt, sitelistcache.txt, sitelistdownload.txt, sitelistfilter.txt, filter.txt, Airgap.db, Fixlet, Downloads, ZIP, and LOGS.
 - User settings are stored in BESAirGapUI.settings.json in the application folder.
 
 3. Launching The Application
@@ -48,18 +49,19 @@ BigFix AirGap UI is a Windows interface for running BESAirgapTool.exe. It helps 
 5. Review the Selected Row Preview for the highlighted row.
 6. Click Run Airgap Tool.
 7. If R is selected, choose whether to zip the Downloads folder at the end of the run.
-8. If R sites are selected, enter optional filter values when prompted or leave fields blank to skip filters.
-9. Watch the BES AirGap Status window for live command output.
-10. Review the final Fixlet, Downloads, manual list, zip, and status output locations.
+8. If zip creation is selected, choose whether to split the zip into smaller files and enter the size in GB.
+9. If R sites are selected, enter optional filter values when prompted or leave fields blank to skip filters.
+10. Watch the BES AirGap Status window for live command output.
+11. Review the final Fixlet, Downloads, manual list, ZIP output, and status output locations.
 
 7. Filters
 
 When R processing is selected, the application can prompt for optional filters for each selected download site. The filter dialog includes:
 
-- -fcategory - Fixlet category property
-- -fcve - To specify the CVE (Common Vulnerabilities and Exposures) id associated with a security patch
+- -fcategory - Fixlet category property.
+- -fcve - To specify the CVE (Common Vulnerabilities and Exposures) id associated with a security patch.
 - -fdays - To select Fixlets whose last modified date falls within a specified number of days from the date you run the command.
-- -fproduct - To specify the product name to which the Fixlet is applicable, such as Win2008 or Win7. This information is not shown in the Console. This option is available only for sites related to patches for Windows operating systems.
+- -fproduct - To specify the product name to which the Fixlet is applicable, such as Win2008 or Win7.
 - -fsource - Provider of file, such as BigFix, Adobe, or Microsoft.
 - -fseverity - To specify the severity that a vendor associates with a security patch.
 
@@ -83,13 +85,22 @@ When values contain spaces, enclose the parameter value in double quotes. Values
 
 9. Zip Output
 
-When zip creation is selected for an R run, the Downloads folder is compressed into a zip file named:
+When zip creation is selected for an R run, the Downloads folder is compressed into a zip file in the ZIP folder named:
 
 Downloads_<serialnumber>_<yyyy-MM-dd>.zip
 
 Example:
 
 Downloads_1234567890_2026-04-29.zip
+
+If split zip creation is selected, enter the desired size per file in GB. The application creates multiple standard zip files in the ZIP folder named:
+
+Downloads_<serialnumber>_<yyyy-MM-dd>_part001.zip
+Downloads_<serialnumber>_<yyyy-MM-dd>_part002.zip
+
+Each split file is a normal zip file. Very large individual files may create a part larger than the selected size because files are not broken apart inside a zip.
+
+When split zip files are created, AirGapZipExtractor.exe is also created in the ZIP folder if it does not already exist. The extractor can be run from that folder to extract all *_part###.zip files into a Downloads folder in the same directory as the zip parts.
 
 10. BES AirGap Status Window
 
@@ -118,16 +129,37 @@ Downloads_1234567890_2026-04-29.zip
 - Airgap.db may be copied to serial-specific files such as Airgap.db.<serial> so each serial can maintain its own database state.
 - Use Delete All Databases carefully; it removes the active and serial-specific database files when the application closes.
 
-14. Troubleshooting
+14. Generated Files And Folders
+
+The application creates and uses working files and folders such as:
+
+- Airgap.db
+- Airgap.db.<serialnumber>
+- Fixlet
+- Downloads
+- ZIP
+- LOGS
+- sitelist.txt
+- sitelistcache.txt
+- sitelistdownload.txt
+- sitelistfilter.txt
+- filter.txt
+- BESAirGapUI.settings.json
+- AirGapZipExtractor.exe
+
+These generated files should generally stay out of source control because they can contain local state, serial-specific data, logs, or downloaded content.
+
+15. Troubleshooting
 
 - If the application cannot start, confirm BESAirgapTool.exe is in the same folder as BESAirGapUI.exe.
 - If a run fails, review the BES AirGap Status window for live output and error messages.
 - If an unexpected error occurs, review BESAirGapUI-crash.log in the application folder.
 - If F - Create Filter List is selected, confirm that only one site uses F.
 - If download output is missing, check the Downloads folder and the manual list popup.
+- If zip output is missing, check the ZIP folder next to BESAirGapUI.exe.
 - If email delivery blocks the executable, use an approved internal distribution channel and consider code signing with a trusted certificate.
 
-15. Recommended Practices
+16. Recommended Practices
 
 - Keep the application and required runtime files together in one approved folder.
 - Review selected site options before clicking Run Airgap Tool.
