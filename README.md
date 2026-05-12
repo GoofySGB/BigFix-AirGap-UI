@@ -11,7 +11,7 @@ The UI expects `BESAirGapUI.exe` and `BESAirgapTool.exe` to remain in the same f
 
 ## Version
 
-Current build: `2.1.0`
+Current build: `2.2.1`
 
 ## Launching
 
@@ -83,6 +83,12 @@ Use that manual list to identify items that require manual download handling.
 
 ## Zip Output
 
+During download runs, the UI watches the AirGap tool output for the `Disk Space Required=<size>MB` check. If the required download space is larger than the free space on the `Downloads` drive, the UI stops that download attempt and shows a Retry/Cancel popup. Free up disk space, then choose Retry to continue the download.
+
+Before zip creation, the UI also checks whether the `ZIP` output drive has enough free space for the current `Downloads` folder contents. If there is not enough room, it shows the same Retry/Cancel popup so space can be freed before compression begins.
+
+While zipping, the BES AirGap Status window reports the free-space check, zip part creation, each file being added, manifest writing, and split-zip validation.
+
 When zip creation is selected for an `R` run, the `Downloads` folder is compressed into a zip file in the `ZIP` folder named:
 
 ```text
@@ -102,7 +108,9 @@ Downloads_<serialnumber>_<yyyy-MM-dd>_part001.zip
 Downloads_<serialnumber>_<yyyy-MM-dd>_part002.zip
 ```
 
-Each split file is a normal zip file. Very large individual files may create a part larger than the selected size because files are not broken apart inside a zip. When split zip files are created, `AirGapZipExtractor.exe` is also created in the `ZIP` folder if it does not already exist. The `AirGapZipExtractor.exe` is used to unzip all the individual zip parts to a `Downloads` folder with in the folder that the individual zip parts reside. 
+Each split file is a normal zip file. If an individual file is larger than the selected part size, the UI writes that file as chunk entries across multiple zip parts and records those chunks in `ExtractionManifest.txt`. When split zip files are created, `ExtractionManifest.txt` and `AirGapZipExtractor.exe` are also created or refreshed in the `ZIP` folder. The manifest records every source file's relative path, final size, final SHA1, zip part, internal zip entry path, chunk index, chunk count, and chunk size, grouped by zip part so each part's contents can be inspected.
+
+Before extraction, `AirGapZipExtractor.exe` opens an extraction status window and confirms the manifest's referenced split zip parts are present. The status window includes a Stop button that cancels extraction if it hangs or needs to be stopped. If no manifest exists, it falls back to building one from the zip parts. It extracts into a fresh `Downloads` folder; if `Downloads` already exists, the extractor uses a timestamped `Downloads_Extracted_<yyyyMMdd_HHmmss>` folder instead. Files that were chunked during zip creation are reassembled into their original relative paths. The status window reports the source folder, output folder, files or chunks being extracted, validation progress, and any failure details. When extraction completes, fails, or is stopped, the status window stays open until the user closes it. The extractor continues through the available zip parts even when some files or referenced parts are missing or corrupted. After extraction, it validates every expected file against the manifest. Missing, corrupted, and other validation failures are written to `ExtractionValidationErrors.txt`, and the extractor exits non-zero when issues are found.
 
 ## Tools Menu
 

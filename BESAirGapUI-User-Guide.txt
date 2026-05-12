@@ -1,89 +1,101 @@
 BES AirGap UI User Guide
-Applies to BESAirGapUI.exe version 2.1.0
-Generated May 3, 2026
+========================
 
-1. Purpose
+BES AirGap UI is a Windows interface for running BESAirgapTool.exe. It helps users create site lists, choose content options, run airgap processing, monitor live tool output, and collect generated Fixlet, download, manual-list, and zip outputs without manually building command lines.
 
-BES AirGap UI is a Windows interface for running BESAirgapTool.exe. It helps users create site lists, select content options, run airgap processing, monitor tool output live, and collect generated Fixlet, download, manual-list, zip, and split-zip outputs without manually building command lines.
+Included Application
+--------------------
 
-2. Required Files
+- BESAirGapUI.exe - Windows UI for the airgap workflow.
+- BESAirgapTool.exe - BES airgap command-line tool used by the UI.
 
-- BESAirGapUI.exe must remain in the same working folder as BESAirgapTool.exe.
-- Supporting runtime files such as libBEScrypto.dll, libBEScryptoFIPS.dll, msvcp110.dll, msvcr110.dll, vccorlib110.dll, and ca-bundle.crt should remain in the same folder when required by your environment.
-- The application creates and uses working files and folders such as sitelist.txt, sitelistcache.txt, sitelistdownload.txt, sitelistfilter.txt, filter.txt, Airgap.db, Fixlet, Downloads, ZIP, and LOGS.
-- User settings are stored in BESAirGapUI.settings.json in the application folder.
+The UI expects BESAirGapUI.exe and BESAirgapTool.exe to remain in the same folder.
 
-3. Launching The Application
+Version
+-------
+
+Current build: 2.2.1
+
+Launching
+---------
 
 1. Open the folder that contains BESAirGapUI.exe.
 2. Double-click BESAirGapUI.exe.
-3. Enter a Serial Number and Email Address, or select a saved pair from Saved Serial Numbers.
+3. Enter a serial number and email address, or choose a saved pair from the saved serial number list.
 4. Click Run to create or refresh the site list.
 
-4. Main Screen Fields
-
-- Serial Number: License serial number used for the current run.
-- Email Address: Email address associated with the serial number.
-- Saved Serial Numbers: Drop-down list of previously used serial and email pairs.
-- Clear All Saved Serial Numbers: Removes saved serial/email history when the application closes.
-- Delete All Databases: Deletes Airgap.db and serial-specific Airgap.db.<serial> files when the application closes.
-- Run: Runs BESAirgapTool.exe to create or refresh the site list.
-- Search: Filters the visible site rows as you type.
-- Site List: Displays available sites and lets you choose a content option for each editable row.
-- Selected Row Preview: Shows only the currently highlighted row and the option selected for that row.
-- Run Airgap Tool: Starts processing for the selected site options.
-
-5. Content Options
-
-- Q - Fixlet Content Only: Retrieves Fixlet content only.
-- G - Incremental Fixlet Only: Runs the incremental Fixlet content path.
-- R - Fixlet + SHA1: Retrieves Fixlet content and SHA1/download information. R runs also create a serial-numbered manual list.
-- F - Create Filter List: Creates a filter list for one site. Only one site can use F at a time.
-
-6. Normal Workflow
+Main Workflow
+-------------
 
 1. Enter or select the serial number and email address.
 2. Click Run and wait for the site list to load.
-3. Use Search if needed to find sites quickly.
-4. For each required site, select Q, G, R, or F in the Content Option column.
-5. Review the Selected Row Preview for the highlighted row.
+3. Use search to find specific sites.
+4. For each required site, select a content option.
+5. Review the selected row preview.
 6. Click Run Airgap Tool.
 7. If R is selected, choose whether to zip the Downloads folder at the end of the run.
 8. If zip creation is selected, choose whether to split the zip into smaller files and enter the size in GB.
-9. If R sites are selected, enter optional filter values when prompted or leave fields blank to skip filters.
+9. If prompted, enter optional filter values or leave fields blank to skip filters.
 10. Watch the BES AirGap Status window for live command output.
-11. Review the final Fixlet, Downloads, manual list, ZIP output, and status output locations.
+11. Review the final Fixlet, Downloads, manual list, zip, and status output locations.
 
-7. Filters
+Content Options
+---------------
 
-When R processing is selected, the application can prompt for optional filters for each selected download site. The filter dialog includes:
+Q - Fixlet Content Only
+Retrieves Fixlet content only.
 
-- -fcategory - Fixlet category property.
-- -fcve - To specify the CVE (Common Vulnerabilities and Exposures) id associated with a security patch.
-- -fdays - To select Fixlets whose last modified date falls within a specified number of days from the date you run the command.
-- -fproduct - To specify the product name to which the Fixlet is applicable, such as Win2008 or Win7.
-- -fsource - Provider of file, such as BigFix, Adobe, or Microsoft.
-- -fseverity - To specify the severity that a vendor associates with a security patch.
+G - Incremental Fixlet Only
+Runs the incremental Fixlet content path.
 
-Leave any field blank to skip that filter.
+R - Fixlet + SHA1
+Retrieves Fixlet content and SHA1/download information. This can also create a serial-numbered manual list.
 
-To specify multiple values, separate values with commas. Example:
+F - Create Filter List
+Creates a filter list for one site. Only one site can use F at a time.
+
+Optional Filters
+----------------
+
+When R processing is selected, the UI can prompt for optional filters for each selected download site:
+
+- -fcategory: Fixlet category property.
+- -fcve: CVE id associated with a security patch.
+- -fdays: Select Fixlets whose last modified date falls within a specified number of days from the run date.
+- -fproduct: Product name to which the Fixlet is applicable, such as Win2008 or Win7.
+- -fsource: Provider of file, such as BigFix, Adobe, or Microsoft.
+- -fseverity: Severity that a vendor associates with a security patch.
+
+Leave a field blank to skip that filter. To specify multiple values, separate values with commas.
+
+Example:
 
 -fseverity "Critical, Important"
 
-When values contain spaces, enclose the parameter value in double quotes. Values are case sensitive.
+Values with spaces should be wrapped in double quotes. Filter values are case sensitive.
 
-8. R Option Manual List Behavior
+Manual Download List
+--------------------
 
-- R option runs include:
-  -createmanuallist manual_list_<serialnumber>.txt
-- After the run, the manual list is moved into the Downloads folder.
-- If the manual list exists in Downloads, the application displays:
-  MANUAL DOWNLOAD REQUIRED
-  See Manual List In Downloads Folder
-- Use the manual list to identify items that require manual download handling.
+R option runs include:
 
-9. Zip Output
+-createmanuallist manual_list_<serialnumber>.txt
+
+After the run, the UI moves the manual list into the Downloads folder. If the manual list exists in Downloads, the UI displays:
+
+MANUAL DOWNLOAD REQUIRED
+See Manual List In Downloads Folder
+
+Use that manual list to identify items that require manual download handling.
+
+Zip Output
+----------
+
+During download runs, the UI watches the AirGap tool output for the Disk Space Required=<size>MB check. If the required download space is larger than the free space on the Downloads drive, the UI stops that download attempt and shows a Retry/Cancel popup. Free up disk space, then choose Retry to continue the download.
+
+Before zip creation, the UI also checks whether the ZIP output drive has enough free space for the current Downloads folder contents. If there is not enough room, it shows the same Retry/Cancel popup so space can be freed before compression begins.
+
+While zipping, the BES AirGap Status window reports the free-space check, zip part creation, each file being added, manifest writing, and split-zip validation.
 
 When zip creation is selected for an R run, the Downloads folder is compressed into a zip file in the ZIP folder named:
 
@@ -93,43 +105,32 @@ Example:
 
 Downloads_1234567890_2026-04-29.zip
 
-If split zip creation is selected, enter the desired size per file in GB. The application creates multiple standard zip files in the ZIP folder named:
+If split zip creation is selected, enter the desired size per file in GB. The application creates multiple standard zip files named:
 
 Downloads_<serialnumber>_<yyyy-MM-dd>_part001.zip
 Downloads_<serialnumber>_<yyyy-MM-dd>_part002.zip
 
-Each split file is a normal zip file. Very large individual files may create a part larger than the selected size because files are not broken apart inside a zip.
+Each split file is a normal zip file. If an individual file is larger than the selected part size, the UI writes that file as chunk entries across multiple zip parts and records those chunks in ExtractionManifest.txt. When split zip files are created, ExtractionManifest.txt and AirGapZipExtractor.exe are also created or refreshed in the ZIP folder. The manifest records every source file's relative path, final size, final SHA1, zip part, internal zip entry path, chunk index, chunk count, and chunk size, grouped by zip part so each part's contents can be inspected.
 
-When split zip files are created, AirGapZipExtractor.exe is also created in the ZIP folder if it does not already exist. The extractor can be run from that folder to extract all *_part###.zip files into a Downloads folder in the same directory as the zip parts.
+Before extraction, AirGapZipExtractor.exe opens an extraction status window and confirms the manifest's referenced split zip parts are present. The status window includes a Stop button that cancels extraction if it hangs or needs to be stopped. If no manifest exists, it falls back to building one from the zip parts. It extracts into a fresh Downloads folder; if Downloads already exists, the extractor uses a timestamped Downloads_Extracted_<yyyyMMdd_HHmmss> folder instead. Files that were chunked during zip creation are reassembled into their original relative paths. The status window reports the source folder, output folder, files or chunks being extracted, validation progress, and any failure details. When extraction completes, fails, or is stopped, the status window stays open until the user closes it. The extractor continues through the available zip parts even when some files or referenced parts are missing or corrupted. After extraction, it validates every expected file against the manifest. Missing, corrupted, and other validation failures are written to ExtractionValidationErrors.txt, and the extractor exits non-zero when issues are found.
 
-10. BES AirGap Status Window
+Tools Menu
+----------
 
-- The status window appears during tool execution and is centered on the screen.
-- The window shows live output from BESAirgapTool.exe while the process is running.
-- The Stop button is available during active runs and attempts to terminate the running process.
-- Completion and failure messages remain visible for review after the run ends.
+- Debug mode - Runs the tool with a visible command prompt for troubleshooting.
+- Delete Fixlet Folder - Removes the Fixlet folder during the next Run step.
+- Delete Downloads Folder - Removes the Downloads folder during the next Run step.
+- Set Proxy - Opens proxy settings. User, password, hostname, and port are required when enabled.
+- Use Https - Adds HTTPS certificate arguments for BESAirgapTool.exe using ca-bundle.crt.
 
-11. Tools Menu
-
-- Debug mode: Runs the tool with a visible command prompt for troubleshooting.
-- Delete Fixlet Folder: Removes the Fixlet folder during the next Run step.
-- Delete Downloads Folder: Removes the Downloads folder during the next Run step.
-- Set Proxy: Opens a proxy settings dialog. User, password, hostname, and port are required when enabled.
-- Use Https: Adds HTTPS certificate arguments for BESAirgapTool.exe using ca-bundle.crt.
-
-12. Help Menu
+Help Menu
+---------
 
 - Version displays the current application version.
-- Support opens a Help popup with support contact information.
+- Support opens a help popup with support contact information.
 
-13. Saved Settings And Databases
-
-- Saved serial/email pairs are stored in BESAirGapUI.settings.json.
-- The application tracks the last serial number and email address used.
-- Airgap.db may be copied to serial-specific files such as Airgap.db.<serial> so each serial can maintain its own database state.
-- Use Delete All Databases carefully; it removes the active and serial-specific database files when the application closes.
-
-14. Generated Files And Folders
+Generated Files
+---------------
 
 The application creates and uses working files and folders such as:
 
@@ -149,20 +150,20 @@ The application creates and uses working files and folders such as:
 
 These generated files should generally stay out of source control because they can contain local state, serial-specific data, logs, or downloaded content.
 
-15. Troubleshooting
+Troubleshooting
+---------------
 
 - If the application cannot start, confirm BESAirgapTool.exe is in the same folder as BESAirGapUI.exe.
 - If a run fails, review the BES AirGap Status window for live output and error messages.
 - If an unexpected error occurs, review BESAirGapUI-crash.log in the application folder.
-- If F - Create Filter List is selected, confirm that only one site uses F.
+- If F - Create Filter List is selected, confirm only one site uses F.
 - If download output is missing, check the Downloads folder and the manual list popup.
-- If zip output is missing, check the ZIP folder next to BESAirGapUI.exe.
-- If email delivery blocks the executable, use an approved internal distribution channel and consider code signing with a trusted certificate.
 
-16. Recommended Practices
+Recommended Practices
+---------------------
 
 - Keep the application and required runtime files together in one approved folder.
 - Review selected site options before clicking Run Airgap Tool.
-- Use Debug mode only when troubleshooting is required.
+- Use debug mode only when troubleshooting is required.
 - Do not delete databases unless you intend to reset stored Airgap.db state.
 - Preserve LOGS output when troubleshooting failed runs.
