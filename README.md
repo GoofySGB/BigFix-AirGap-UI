@@ -11,7 +11,7 @@ The UI expects `BESAirGapUI.exe` and `BESAirgapTool.exe` to remain in the same f
 
 ## Version
 
-Current build: `2.2.1`
+Current build: `3.0.1`
 
 ## Launching
 
