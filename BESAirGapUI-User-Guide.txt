@@ -7,7 +7,12 @@ Included Application
 --------------------
 
 - BESAirGapUI.exe - Windows UI for the airgap workflow.
+
+Required Application
+--------------------
+
 - BESAirgapTool.exe - BES airgap command-line tool used by the UI.
+Which can be optained from https://support.bigfix.com/bes/install/downloadbes.html
 
 The UI expects BESAirGapUI.exe and BESAirgapTool.exe to remain in the same folder.
 
