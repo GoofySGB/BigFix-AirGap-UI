@@ -12,7 +12,7 @@ Required Application
 --------------------
 
 - BESAirgapTool.exe - BES airgap command-line tool used by the UI.
-Which can be optained from https://support.bigfix.com/bes/install/downloadbes.html
+The BESAirGapTool can be obtained by going to https://support.bigfix.com/bes/release/ select the current version of BigFix that you are running, then under utilities you will see the download link for the BESAirGap Tool.
 
 The UI expects BESAirGapUI.exe and BESAirgapTool.exe to remain in the same folder.
 
