@@ -2,10 +2,17 @@
 
 BES AirGap UI is a Windows interface for running `BESAirgapTool.exe`. It helps users create site lists, choose content options, run airgap processing, monitor live tool output, and collect generated Fixlet, download, manual-list, and zip outputs without manually building command lines.
 
+<img width="861" height="656" alt="AirGapUI" src="https://github.com/user-attachments/assets/29a928e7-de85-4538-81f0-c28ac472f475" />
+
 ## Included Application
 
 - `BESAirGapUI.exe` - Windows UI for the airgap workflow.
+
+## Required Application
+
 - `BESAirgapTool.exe` - BES airgap command-line tool used by the UI.
+
+The BESAirGapTool can be obtained by going to https://support.bigfix.com/bes/release/ select the current version of BigFix that you are running, then under utilities you will see the download link for the BESAirGap Tool. 
 
 The UI expects `BESAirGapUI.exe` and `BESAirgapTool.exe` to remain in the same folder.
 
