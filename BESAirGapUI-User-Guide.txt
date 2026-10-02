@@ -1,6 +1,11 @@
 BES AirGap UI User Guide
 ========================
 
+Site Workflow Update - 2026-10-02
+---------------------------------
+
+Q selections run together in one request, followed by a separate G group and then R per site. Execution is sequential because the tool uses shared response and database paths. Each R site stores its SHA1 downloads, named AirgapResponse, and manual list under Downloads/<site>. Each site's ZIP output goes under ZIP/<site>, with separate extraction manifests for split archives.
+
 BES AirGap UI is a Windows interface for running BESAirgapTool.exe. It helps users create site lists, choose content options, run airgap processing, monitor live tool output, and collect generated Fixlet, download, manual-list, and zip outputs without manually building command lines.
 
 Included Application
@@ -19,7 +24,7 @@ The UI expects BESAirGapUI.exe and BESAirgapTool.exe to remain in the same folde
 Version
 -------
 
-Current build: 3.0.1
+Current build: 3.0.2
 
 Launching
 ---------
